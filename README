@@ -34,20 +34,6 @@ Retrieved chunks + question sent to LLM (Groq free tier)
 Answer shown in chat UI (plain HTML/CSS/JS, served by Flask)
 ```
 
-## Why these choices (talking points for interviews)
-
-- **sentence-transformers (all-MiniLM-L6-v2)** for embeddings instead of
-  OpenAI embeddings — runs locally on CPU, zero API cost, good enough quality
-  for small-to-medium document sets.
-- **FAISS** for the vector store — no hosted DB needed, index lives in memory
-  and is rebuilt per session (can be swapped for pgvector/Pinecone later for
-  persistence at scale).
-- **Groq** for the generation step — has a free tier and serves open models
-  (Llama 3.1) fast; swappable with Ollama for a fully offline setup.
-- **Flask + plain HTML/CSS/JS** instead of Streamlit — gives full control
-  over the UI and demonstrates basic full-stack wiring (REST endpoints +
-  fetch calls), which is more relevant if you want to speak to frontend/backend
-  separation in an interview.
 
 ## Setup
 
@@ -61,9 +47,6 @@ Answer shown in chat UI (plain HTML/CSS/JS, served by Flask)
    ```
    export GROQ_API_KEY="your_key_here"
    ```
-   Without this, the app still runs and will show you the raw retrieved
-   chunks instead of an LLM-generated answer — useful for testing the
-   retrieval step in isolation.
 
 3. Run the app:
    ```
