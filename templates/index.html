@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DocBuddy — Chat with your files</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <div class="app">
+
+    <header class="hero">
+      <span class="badge">✨ Multi-Doc RAG Chatbot</span>
+      <h1>Chat with your <span class="highlight">documents</span></h1>
+      <p class="subtitle">Drop in a few PDFs, Word docs, or text files - then just ask.</p>
+    </header>
+
+    <section class="upload-card">
+      <div class="upload-row">
+        <label class="file-picker">
+          <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt" />
+          <span class="file-icon">📎</span>
+          <span class="file-picker-label" id="fileLabel">Choose files to upload</span>
+        </label>
+        <div class="upload-actions">
+          <button id="uploadBtn" class="btn-primary">Upload &amp; Index</button>
+          <button id="resetBtn" class="btn-ghost">Clear</button>
+        </div>
+      </div>
+      <p id="uploadStatus" class="status"></p>
+    </section>
+
+    <section class="chat-card">
+      <div id="chatWindow" class="chat-window" data-empty-hint="Upload something above, then ask away 👋"></div>
+
+      <div class="chat-input">
+        <input type="text" id="queryInput" placeholder="Ask a question about your documents…" autocomplete="off" />
+        <button id="sendBtn" class="btn-send">Send</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

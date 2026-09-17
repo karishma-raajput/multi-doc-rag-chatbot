@@ -1,0 +1,90 @@
+# Multi-Doc RAG Chatbot (Flask + HTML, zero cost)
+
+A Retrieval-Augmented Generation (RAG) chatbot that lets you upload multiple
+documents (PDF, DOCX, TXT) and ask questions about them — built entirely with
+free/local tools, no paid database or API required.
+
+## Architecture
+
+```
+User uploads PDF/DOCX/TXT
+        |
+        v
+Text extraction (pypdf / python-docx)
+        |
+        v
+Chunking (LangChain RecursiveCharacterTextSplitter)
+        |
+        v
+Embeddings (sentence-transformers, local model, no API cost)
+        |
+        v
+FAISS index (local, in-memory vector store)
+        |
+        v
+User asks a question
+        |
+        v
+Query embedded -> top-k similar chunks retrieved from FAISS
+        |
+        v
+Retrieved chunks + question sent to LLM (Groq free tier)
+        |
+        v
+Answer shown in chat UI (plain HTML/CSS/JS, served by Flask)
+```
+
+## Why these choices (talking points for interviews)
+
+- **sentence-transformers (all-MiniLM-L6-v2)** for embeddings instead of
+  OpenAI embeddings — runs locally on CPU, zero API cost, good enough quality
+  for small-to-medium document sets.
+- **FAISS** for the vector store — no hosted DB needed, index lives in memory
+  and is rebuilt per session (can be swapped for pgvector/Pinecone later for
+  persistence at scale).
+- **Groq** for the generation step — has a free tier and serves open models
+  (Llama 3.1) fast; swappable with Ollama for a fully offline setup.
+- **Flask + plain HTML/CSS/JS** instead of Streamlit — gives full control
+  over the UI and demonstrates basic full-stack wiring (REST endpoints +
+  fetch calls), which is more relevant if you want to speak to frontend/backend
+  separation in an interview.
+
+## Setup
+
+1. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+2. (Optional but recommended) Get a free Groq API key from
+   https://console.groq.com and set it as an environment variable:
+   ```
+   export GROQ_API_KEY="your_key_here"
+   ```
+   Without this, the app still runs and will show you the raw retrieved
+   chunks instead of an LLM-generated answer — useful for testing the
+   retrieval step in isolation.
+
+3. Run the app:
+   ```
+   python app.py
+   ```
+
+4. Open your browser at `http://localhost:5000`
+
+## Usage
+
+1. Upload one or more PDF/DOCX/TXT files using the upload box.
+2. Wait for the "Processed X file(s)..." confirmation.
+3. Ask a question in the chat box — the answer will be grounded in your
+   uploaded documents, with source filenames shown below each answer.
+4. Use "Clear Knowledge Base" to reset and start with new documents.
+
+## Possible extensions (good to mention as "future work")
+
+- Swap FAISS for pgvector to persist the knowledge base across restarts.
+- Add a multi-agent step: one agent for retrieval quality checking, another
+  for answer synthesis.
+- Add observability: log retrieval latency, chunk relevance scores, and
+  flag low-confidence answers.
+- Support streaming responses instead of waiting for the full answer.
