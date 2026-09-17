@@ -63,11 +63,3 @@ Answer shown in chat UI (plain HTML/CSS/JS, served by Flask)
    uploaded documents, with source filenames shown below each answer.
 4. Use "Clear Knowledge Base" to reset and start with new documents.
 
-## Possible extensions (good to mention as "future work")
-
-- Swap FAISS for pgvector to persist the knowledge base across restarts.
-- Add a multi-agent step: one agent for retrieval quality checking, another
-  for answer synthesis.
-- Add observability: log retrieval latency, chunk relevance scores, and
-  flag low-confidence answers.
-- Support streaming responses instead of waiting for the full answer.
