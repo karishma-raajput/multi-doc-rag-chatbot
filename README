@@ -1,7 +1,7 @@
-# Multi-Doc RAG Chatbot (Flask + HTML, zero cost)
+# Multi-Doc RAG Chatbot 
 
 A Retrieval-Augmented Generation (RAG) chatbot that lets you upload multiple
-documents (PDF, DOCX, TXT) and ask questions about them — built entirely with
+documents (PDF, DOCX, TXT) and ask questions about them - built entirely with
 free/local tools, no paid database or API required.
 
 ## Architecture
@@ -28,7 +28,7 @@ User asks a question
 Query embedded -> top-k similar chunks retrieved from FAISS
         |
         v
-Retrieved chunks + question sent to LLM (Groq free tier)
+Retrieved chunks + question sent to LLM (Groq)
         |
         v
 Answer shown in chat UI (plain HTML/CSS/JS, served by Flask)
